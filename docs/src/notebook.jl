@@ -21,9 +21,6 @@ Let's start by importing the `Plots` package. _(Pluto's package manager automati
 # ╔═╡ e5abaf40-f105-11ea-1494-2da858d7db5b
 md"We need to choose a _backend_ for Plots.jl. We choose `plotly` because it works with no additional dependencies. You can [read more about backends](http://docs.juliaplots.org/latest/backends/#backends) in Plots.jl - it's one of its coolest features!"
 
-# ╔═╡ 9414a092-f105-11ea-10cd-23f84e47d876
-plotly()
-
 # ╔═╡ 5ae65950-9ad9-11ea-2e14-35119d369acd
 md"""
 ## The basics
@@ -1096,7 +1093,6 @@ version = "0.9.1+5"
 # ╟─7b93882c-9ad8-11ea-0288-0941e163f9d5
 # ╠═5e611449-c239-4547-9d13-5db33a081e58
 # ╟─e5abaf40-f105-11ea-1494-2da858d7db5b
-# ╠═9414a092-f105-11ea-10cd-23f84e47d876
 # ╟─5ae65950-9ad9-11ea-2e14-35119d369acd
 # ╠═aaa805d4-9ad8-11ea-21c2-3b20580fea0e
 # ╠═c02bc44a-9ad8-11ea-117d-3997e1f3cab0
