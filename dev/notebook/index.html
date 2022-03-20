@@ -1,0 +1,3795 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Plotting in Pluto · PlutoStaticHTMLDemo.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link rel="canonical" href="https://sethaxen.github.io/PlutoStaticHTMLDemo.jl/notebook/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.039/juliamono-regular.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">PlutoStaticHTMLDemo.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Plotting in Pluto</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Plotting in Pluto</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Plotting in Pluto</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/sethaxen/PlutoStaticHTMLDemo.jl/blob/master/docs/src/notebook.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><style>
+    table {
+        display: table !important;
+        margin: 2rem auto !important;
+        border-top: 2pt solid rgba(0,0,0,0.2);
+        border-bottom: 2pt solid rgba(0,0,0,0.2);
+    }
+
+    pre, div {
+        margin-top: 1.4rem !important;
+        margin-bottom: 1.4rem !important;
+    }
+</style>
+
+<!-- PlutoStaticHTML.Begin -->
+<!--
+    # This information is used for caching.
+    [PlutoStaticHTML.State]
+    input_sha = "8858a2bf87e1e559f90561731355e6f044bd022169ffdd7b66cb2d69e52572bb"
+    julia_version = "1.7.2"
+-->
+
+<div class="markdown"><h1>Plotting in Pluto</h1>
+<p>Pluto is an excellent environment to visualise your data. This notebook shows a few examples of using plots in Pluto using the <code>Plots</code> package.</p>
+<p>I wrote this notebook so you can understand it even if you have never used <code>Plots</code>. However, it is not intended as a complete tutorial for the package. If you want to start making your own plots, I recommend looking at the package <a href="https://docs.juliaplots.org/latest/">documentation</a> for a full tutorial as well.</p>
+<p>Let&#39;s start by importing the <code>Plots</code> package. <em>&#40;Pluto&#39;s package manager automatically takes care of installing and tracking dependencies&#33;&#41;</em></p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>using Plots</code></pre>
+
+
+
+<div class="markdown"><p>We need to choose a <em>backend</em> for Plots.jl. We choose <code>plotly</code> because it works with no additional dependencies. You can <a href="http://docs.juliaplots.org/latest/backends/#backends">read more about backends</a> in Plots.jl - it&#39;s one of its coolest features&#33;</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>plotly()</code></pre>
+<pre id='var-hash990256' class='documenter-example-output'><code class='code-output'>Plots.PlotlyBackend()</code></pre>
+
+
+<div class="markdown"><h2>The basics</h2>
+<p>Now we can get started. We can begin by making some X and Y values. I typed out some Y values so you can alter them and see the effect. </p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>years = 2001:2010</code></pre>
+<pre id='var-years' class='documenter-example-output'><code class='code-output'>2001:2010</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>apples = [15, 25, 80, 75, 50, 30, 35, 15, 25, 35]</code></pre>
+<pre id='var-apples' class='documenter-example-output'><code class='code-output'>10-element Vector{Int64}:
+ 15
+ 25
+ 80
+ 75
+ 50
+ 30
+ 35
+ 15
+ 25
+ 35</code></pre>
+
+
+<div class="markdown"><p>Great, let&#39;s plot them&#33; The basic syntax of <code>Plots</code> is very simple.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>plot(years, apples)</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="4ad6ebbd-63fb-4e19-a09b-77e38c1e179d" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('4ad6ebbd-63fb-4e19-a09b-77e38c1e179d', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.03619130941965587,
+            0.9934383202099738
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>You can change the properties of the plot by giving different arguments to the function call.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>plot(years, apples, legend=false, title="Number of apples per year")</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="586852bd-2ab2-49c0-b5c5-e2e8e0423a22" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('586852bd-2ab2-49c0-b5c5-e2e8e0423a22', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.03619130941965587,
+            0.9934383202099738
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [
+        {
+            "yanchor": "top",
+            "xanchor": "center",
+            "rotation": -0.0,
+            "y": 1.0,
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 20
+            },
+            "yref": "paper",
+            "showarrow": false,
+            "text": "Number of apples per year",
+            "xref": "paper",
+            "x": 0.5148148148148148
+        }
+    ],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9415463692038496
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>Alternatively, you can use <code>plot&#33;&#40;&#41;</code>. This function takes the same arguments, but alters our existing plot.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>begin
+	plot(years, apples)
+	plot!(legend=false)
+	plot!(title="Number of apples per year")
+end</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="3fa96696-3fc7-4acd-b792-2c6c47d7fe2f" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('3fa96696-3fc7-4acd-b792-2c6c47d7fe2f', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.03619130941965587,
+            0.9934383202099738
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [
+        {
+            "yanchor": "top",
+            "xanchor": "center",
+            "rotation": -0.0,
+            "y": 1.0,
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 20
+            },
+            "yref": "paper",
+            "showarrow": false,
+            "text": "Number of apples per year",
+            "xref": "paper",
+            "x": 0.5148148148148148
+        }
+    ],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9415463692038496
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><h2>More options</h2>
+<p>We can easily plot multiple series.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>oranges = rand(1:100, 10)</code></pre>
+<pre id='var-oranges' class='documenter-example-output'><code class='code-output'>10-element Vector{Int64}:
+  59
+  39
+   5
+  91
+  52
+ 100
+  17
+  33
+  90
+  83</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>begin
+	plot(years, apples, label="apples")
+	plot!(years, oranges, label="oranges")
+end</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="1bb19345-be20-48e9-bfc3-9f5cd9df9e56" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('1bb19345-be20-48e9-bfc3-9f5cd9df9e56', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "apples",
+        "zmin": null,
+        "legendgroup": "apples",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "oranges",
+        "zmin": null,
+        "legendgroup": "oranges",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            59.0,
+            39.0,
+            5.0,
+            91.0,
+            52.0,
+            100.0,
+            17.0,
+            33.0,
+            90.0,
+            83.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            2.15,
+            102.85
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>Different plot types have their own functions.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>scatter(apples, oranges, legend=false)</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="55d8cfc1-d2b5-4f56-909f-10fc57373e52" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('55d8cfc1-d2b5-4f56-909f-10fc57373e52', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "showlegend": true,
+        "mode": "markers",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "marker": {
+            "symbol": "circle",
+            "color": "rgba(0, 154, 250, 1.000)",
+            "line": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "width": 1
+            },
+            "size": 8
+        },
+        "zmax": null,
+        "y": [
+            59.0,
+            39.0,
+            5.0,
+            91.0,
+            52.0,
+            100.0,
+            17.0,
+            33.0,
+            90.0,
+            83.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            2.15,
+            102.85
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>You can also plot a function instead of an output array&#33;</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>begin
+	function myfunction(x)
+		return sin(x / 2)
+	end
+	
+	plot(years, sin, label="sine")
+	plot!(years, myfunction, label="my function")
+end</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="e57aed9e-7d09-4fb1-8fd8-25ef310ed924" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('e57aed9e-7d09-4fb1-8fd8-25ef310ed924', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "sine",
+        "zmin": null,
+        "legendgroup": "sine",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.1932959401255586,
+            -0.7211630200865586,
+            -0.972588025444757,
+            -0.32982008552852765,
+            0.6161829199793759,
+            0.9956701905313681,
+            0.4597428796771605,
+            -0.49886991453931107,
+            -0.9988240099848236,
+            -0.580463916963213
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "my function",
+        "zmin": null,
+        "legendgroup": "my function",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.9952739571052135,
+            0.9199905975863218,
+            0.619461453984505,
+            0.1672665419737925,
+            -0.3258810531366963,
+            -0.7392416009402618,
+            -0.9716100228814947,
+            -0.9660944251371497,
+            -0.7240452183982388,
+            -0.30472449023565196
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.0658209390492855,
+            0.9934383202099738
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -1.0,
+            -0.5,
+            0.0,
+            0.5,
+            1.0
+        ],
+        "range": [
+            -1.0586588360003093,
+            1.0555050165468538
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><h2>Naming plots</h2>
+<p>Plots are also just a type of variable, so you can give them a name.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>apples_plot = plot(years, apples, 
+	legend=false, xlabel="year", ylabel="apples")</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="7442e94e-e063-409e-94a9-c038d9bebf8f" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('7442e94e-e063-409e-94a9-c038d9bebf8f', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.061654272382618835,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "year",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.07581474190726165,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "apples",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+<pre class='language-julia'><code class='language-julia'>apples_vs_oranges = scatter(apples, oranges, 
+	legend=false, xlabel="apples", ylabel="oranges")</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="a925c1a6-3578-4001-b65d-4cea9264bf92" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('a925c1a6-3578-4001-b65d-4cea9264bf92', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "showlegend": true,
+        "mode": "markers",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "marker": {
+            "symbol": "circle",
+            "color": "rgba(0, 154, 250, 1.000)",
+            "line": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "width": 1
+            },
+            "size": 8
+        },
+        "zmax": null,
+        "y": [
+            59.0,
+            39.0,
+            5.0,
+            91.0,
+            52.0,
+            100.0,
+            17.0,
+            33.0,
+            90.0,
+            83.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.07646908719743364,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "apples",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            2.15,
+            102.85
+        ],
+        "domain": [
+            0.07581474190726165,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "oranges",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>This way, you can show them again</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>apples_plot</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="eea86767-6d45-4da5-bb08-98e1a864df47" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('eea86767-6d45-4da5-bb08-98e1a864df47', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.061654272382618835,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "year",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.07581474190726165,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "apples",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><h2>Combining subplots</h2>
+<p>We can combine multiple plots in a single image using the <code>layout</code> argument. One option is to provide a matrix of values and call a single <code>plot</code>.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>pears = rand(1:100, 10)</code></pre>
+<pre id='var-pears' class='documenter-example-output'><code class='code-output'>10-element Vector{Int64}:
+ 64
+ 87
+ 27
+ 88
+ 66
+ 30
+ 37
+ 48
+ 98
+ 92</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>bananas = rand(1:100, 10)</code></pre>
+<pre id='var-bananas' class='documenter-example-output'><code class='code-output'>10-element Vector{Int64}:
+ 10
+ 11
+ 10
+ 33
+ 73
+ 30
+ 30
+  6
+ 70
+ 60</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>fruits = hcat(apples, oranges, pears, bananas)</code></pre>
+<pre id='var-fruits' class='documenter-example-output'><code class='code-output'>10×4 Matrix{Int64}:
+ 15   59  64  10
+ 25   39  87  11
+ 80    5  27  10
+ 75   91  88  33
+ 50   52  66  73
+ 30  100  30  30
+ 35   17  37  30
+ 15   33  48   6
+ 25   90  98  70
+ 35   83  92  60</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>plot(years, fruits, layout=(4, 1), legend=false)</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="fc721712-bb31-40d4-8dfb-834701e18e16" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('fc721712-bb31-40d4-8dfb-834701e18e16', [
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x2",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y2",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y2",
+        "zmin": null,
+        "legendgroup": "y2",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            59.0,
+            39.0,
+            5.0,
+            91.0,
+            52.0,
+            100.0,
+            17.0,
+            33.0,
+            90.0,
+            83.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x3",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y3",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y3",
+        "zmin": null,
+        "legendgroup": "y3",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            64.0,
+            87.0,
+            27.0,
+            88.0,
+            66.0,
+            30.0,
+            37.0,
+            48.0,
+            98.0,
+            92.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x4",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y4",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y4",
+        "zmin": null,
+        "legendgroup": "y4",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            10.0,
+            11.0,
+            10.0,
+            33.0,
+            73.0,
+            30.0,
+            30.0,
+            6.0,
+            70.0,
+            60.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "xaxis1": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y1",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "yaxis3": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            24.87,
+            100.13
+        ],
+        "domain": [
+            0.28762029746281725,
+            0.49015748031496076
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x3",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "height": 400,
+    "yaxis4": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            10.0,
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0
+        ],
+        "range": [
+            3.99,
+            75.01
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.24015748031496065
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x4",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "yaxis2": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            2.15,
+            102.85
+        ],
+        "domain": [
+            0.5376202974628171,
+            0.7401574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x2",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "xaxis3": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y3",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "xaxis4": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y4",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "yaxis1": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.787620297462817,
+            0.9901574803149605
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x1",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "annotations": [],
+    "xaxis2": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y2",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>This works when we have a nice output matrix. For more complicated options, named plots are usually a good solution. When we have created a few plots, we can put them together in a single plot.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>plot(apples_plot, apples_vs_oranges, layout=(1, 2))</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="874f93b2-12f4-4299-85a9-164f534d775a" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('874f93b2-12f4-4299-85a9-164f534d775a', [
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x2",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y2",
+        "x": [
+            15.0,
+            25.0,
+            80.0,
+            75.0,
+            50.0,
+            30.0,
+            35.0,
+            15.0,
+            25.0,
+            35.0
+        ],
+        "showlegend": true,
+        "mode": "markers",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "marker": {
+            "symbol": "circle",
+            "color": "rgba(0, 154, 250, 1.000)",
+            "line": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "width": 1
+            },
+            "size": 8
+        },
+        "zmax": null,
+        "y": [
+            59.0,
+            39.0,
+            5.0,
+            91.0,
+            52.0,
+            100.0,
+            17.0,
+            33.0,
+            90.0,
+            83.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "xaxis1": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.061654272382618835,
+            0.4860309128025664
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y1",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "year",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "height": 400,
+    "yaxis2": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            2.15,
+            102.85
+        ],
+        "domain": [
+            0.07581474190726165,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x2",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "oranges",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "xaxis2": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.5690616797900263,
+            0.9934383202099739
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y2",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "apples",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "yaxis1": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            30.0,
+            40.0,
+            50.0,
+            60.0,
+            70.0,
+            80.0
+        ],
+        "range": [
+            13.05,
+            81.95
+        ],
+        "domain": [
+            0.07581474190726165,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x1",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "apples",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "annotations": [],
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><h2>The Pluto way of plotting</h2>
+<p>For the most part, plotting in Pluto is not different from anywhere else. However, there are a few things to keep in mind.</p>
+<p>The <code>plot&#33;&#40;&#41;</code> function alters an existing plot. In reactive programming, you are not supposed to alter the value of a variable you defined in a different cell. I strongly recommend that you only use <code>plot&#33;&#40;&#41;</code> to alter plots you initialised in the same cell. </p>
+<p>For the sake of demonstration, here is what happens if you use <code>plot&#33;&#40;&#41;</code> in its own cell. Let&#39;s start by making a new plot.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>pears_plot = plot(years, pears, label="pears")</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="61ff44c9-36a0-4ce7-bf6b-5c63373fe649" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('61ff44c9-36a0-4ce7-bf6b-5c63373fe649', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "pears",
+        "zmin": null,
+        "legendgroup": "pears",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            64.0,
+            87.0,
+            27.0,
+            88.0,
+            66.0,
+            30.0,
+            37.0,
+            48.0,
+            98.0,
+            92.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            24.87,
+            100.13
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>The cell below adds a new series to the plot. It shows the altered plot, while our original plot still looks intact.</p>
+<p>Maybe that&#39;s not so bad. It seems like we could use this to build a plot one step at a time. But try changing the plot below so that it plots oranges instead of bananas.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>plot!(pears_plot, years, bananas, label="bananas")</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="0c841c32-0588-4670-89e6-d8819030f8c5" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('0c841c32-0588-4670-89e6-d8819030f8c5', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "pears",
+        "zmin": null,
+        "legendgroup": "pears",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            64.0,
+            87.0,
+            27.0,
+            88.0,
+            66.0,
+            30.0,
+            37.0,
+            48.0,
+            98.0,
+            92.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "bananas",
+        "zmin": null,
+        "legendgroup": "bananas",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            10.0,
+            11.0,
+            10.0,
+            33.0,
+            73.0,
+            30.0,
+            30.0,
+            6.0,
+            70.0,
+            60.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            3.24,
+            100.76
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>Did you get three series? It&#39;s because the <code>plot</code> still has the <code>bananas</code> data added to it. So the bananas are still plotted, even though you now don&#39;t have any code doing that. This is not great for coding: it means that if you close your notebook, your plots might not look the same when you open it again.</p>
+<p>Try running the cell a few times. You keep adding series&#33; Also not great when working on a plot.</p>
+</div>
+
+
+<div class="markdown"><p>So what if you do want to add things to a plot one at a time, instead of using a single cell? My recommendation is to define your plot in a function.</p>
+</div>
+
+<pre class='language-julia'><code class='language-julia'>function plot_pears()
+	myplot = plot(years, pears, label="pears")
+	return myplot
+end</code></pre>
+<pre id='var-plot_pears' class='documenter-example-output'><code class='code-output'>plot_pears (generic function with 1 method)</code></pre>
+
+<pre class='language-julia'><code class='language-julia'>plot_pears()</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="ebb0079d-1ae7-425e-bb76-3942212758fc" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('ebb0079d-1ae7-425e-bb76-3942212758fc', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "pears",
+        "zmin": null,
+        "legendgroup": "pears",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            64.0,
+            87.0,
+            27.0,
+            88.0,
+            66.0,
+            30.0,
+            37.0,
+            48.0,
+            98.0,
+            92.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            24.87,
+            100.13
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+<pre class='language-julia'><code class='language-julia'>begin
+	plot_pears()
+	plot!(years, bananas, label="bananas")
+end</code></pre>
+<script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>    <div id="579a02c2-b62e-4aaa-9705-b76ac1884be9" style="width:600px;height:400px;"></div>
+    <script>
+    
+        Plotly.newPlot('579a02c2-b62e-4aaa-9705-b76ac1884be9', [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "pears",
+        "zmin": null,
+        "legendgroup": "pears",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            64.0,
+            87.0,
+            27.0,
+            88.0,
+            66.0,
+            30.0,
+            37.0,
+            48.0,
+            98.0,
+            92.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "bananas",
+        "zmin": null,
+        "legendgroup": "bananas",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            10.0,
+            11.0,
+            10.0,
+            33.0,
+            73.0,
+            30.0,
+            30.0,
+            6.0,
+            70.0,
+            60.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            2002.0,
+            2004.0,
+            2006.0,
+            2008.0,
+            2010.0
+        ],
+        "range": [
+            2000.73,
+            2010.27
+        ],
+        "domain": [
+            0.05100612423447069,
+            0.9934383202099737
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "2002",
+            "2004",
+            "2006",
+            "2008",
+            "2010"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 400,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            20.0,
+            40.0,
+            60.0,
+            80.0,
+            100.0
+        ],
+        "range": [
+            3.24,
+            100.76
+        ],
+        "domain": [
+            0.03762029746281716,
+            0.9901574803149606
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "20",
+            "40",
+            "60",
+            "80",
+            "100"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend_position": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 600
+}
+);
+
+    
+    </script>
+
+
+
+<div class="markdown"><p>Try changing the function for the base plot, or the addition in the bottom cell. No weird effects&#33;</p>
+</div>
+
+<!-- PlutoStaticHTML.End --></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.15 on <span class="colophon-date" title="Sunday 20 March 2022 01:13">Sunday 20 March 2022</span>. Using Julia version 1.7.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
