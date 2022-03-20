@@ -1,7 +1,15 @@
 using PlutoStaticHTMLDemo
 using Documenter
+using PlutoStaticHTML
 
 DocMeta.setdocmeta!(PlutoStaticHTMLDemo, :DocTestSetup, :(using PlutoStaticHTMLDemo); recursive=true)
+
+const DOCS_SRC_PATH = joinpath(@__DIR__, "src")
+output_format = PlutoStaticHTML.documenter_output
+build_opts = PlutoStaticHTML.BuildOptions(
+    DOCS_SRC_PATH; previous_dir=DOCS_SRC_PATH, output_format=output_format
+)
+PlutoStaticHTML.build_notebooks(build_opts)
 
 makedocs(;
     modules=[PlutoStaticHTMLDemo],
@@ -15,6 +23,7 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Plotting in Pluto" => "notebook.md",
     ],
 )
 
